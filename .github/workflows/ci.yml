@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 18, 20] # Run on multiple Node versions
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,10 +19,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: ${{matrix.node-version}}
 
       - name: Install dependencies
         run: npm install
 
+      - name: Run lint
+        run: npm run lint
+
       - name: Run tests
         run: npm test
+      - name: Use secret in script
+        run: echo "Secret length is ${#MY_API_KEY}"
+        env:
+          MY_API_KEY: ${{secrets.MY_API_KEY}}
+
