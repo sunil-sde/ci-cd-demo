@@ -1,1 +1,0 @@
-console.log(require('./sum.js')(3, 5));
