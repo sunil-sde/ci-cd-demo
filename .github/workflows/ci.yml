@@ -21,5 +21,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run lint
+        run: npm run lint
+
       - name: Run tests
         run: npm test
+      - name: Use secret in script
+        run: echo "Secret length is ${#MY_API_KEY}"
+        env:
+          MY_API_KEY: ${{secrets.MY_API_KEY}}
+
