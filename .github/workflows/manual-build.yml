@@ -1,0 +1,29 @@
+name: Manual Build Process
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_target:
+        description: "Build target (staging or production)"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies & Build
+        run: |
+          npm install
+          npm run build
+          echo "Build complete for ${{ github.event.inputs.build_target }}"
