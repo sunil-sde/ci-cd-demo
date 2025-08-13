@@ -9,9 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18] # Run on multiple Node versions
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
